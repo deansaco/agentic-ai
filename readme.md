@@ -107,10 +107,10 @@ We'll use an elasticsearch vectorstore with watsonx slate embeddings
 
 ### Installation
 
-1. Get API Keys for Watsonx.ai, Tavily, and elasticsearch
+1. Get API Keys for OpenAI and Tavily
 2. Clone the repo
    ```bash
-   git clone https://github.ibm.com/Dean-Sacoransky/agenticai.git
+   git clone https://github.com/deansaco/agentic-ai/
    ```
 3. Create virtual environment
 
