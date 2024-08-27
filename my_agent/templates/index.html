@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic RAG Query</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        #user_query {
+            width: 100%; /* Make the input take the full width of its container */
+            padding: 10px; /* Add some padding for better appearance */
+            font-size: 16px; /* Increase the font size */
+        }
+    </style>
+</head>
+<body>
+    <h1>Query Agentic RAG</h1>
+    <form id="query-form">
+        <label for="user_query">Enter your query:</label><br>
+        <input type="text" id="user_query" name="user_query" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+    <script>
+        document.getElementById('query-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userQuery = document.getElementById('user_query').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Loading...';
+
+            try {
+                const response = await fetch('http://localhost:5000/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_query: userQuery })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const responseText = await response.text();
+                try {
+                    const data = JSON.parse(responseText);
+
+                    // Clear the response div
+                    responseDiv.innerHTML = '';
+
+                    // Display partial answers sequentially
+                    if (data.partial_answers && data.partial_answers.length > 0) {
+                        const partialAnswersList = document.createElement('ul');
+                        data.partial_answers.forEach(qa => {
+                            const listItem = document.createElement('li');
+                            listItem.innerHTML = `<strong>Question:</strong> ${qa.question} <br> <strong>Answer:</strong> ${qa.answer}`;
+                            partialAnswersList.appendChild(listItem);
+                        });
+                        responseDiv.appendChild(partialAnswersList);
+                    }
+
+                    // Display final response
+                    if (data.final_response) {
+                        const finalResponse = document.createElement('p');
+                        finalResponse.innerHTML = `<strong>Final Response:</strong> ${data.final_response}`;
+                        responseDiv.appendChild(finalResponse);
+                    }
+                } catch (e) {
+                    console.error('Failed to parse JSON:', responseText);
+                    throw new Error('Failed to parse JSON response');
+                }
+            } catch (error) {
+                responseDiv.innerHTML = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
