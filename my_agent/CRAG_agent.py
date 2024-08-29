@@ -69,13 +69,17 @@ class CRAG:
         sub_answers = []
         steps.append("entering iterative CRAG for sub questions")
 
-        def process_question(q):
+        def process_question(q, index):
             print(f"Handling subquestion: {q}")
-            return self.CRAG_graph.invoke({"question": q, "steps": steps})["generation"]
+            return index, self.CRAG_graph.invoke({"question": q, "steps": steps})["generation"]
 
         with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(process_question, q) for q in questions]
-            sub_answers = [future.result() for future in as_completed(futures)]
+            futures = [executor.submit(process_question, q, i) for i, q in enumerate(questions)]
+            results = [future.result() for future in as_completed(futures)]
+        
+        # Sort results based on the original order
+        sorted_results = sorted(results, key=lambda x: x[0])
+        sub_answers = [result[1] for result in sorted_results]
 
         return {
             "sub_answers": sub_answers,
