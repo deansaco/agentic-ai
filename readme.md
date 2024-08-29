@@ -8,11 +8,9 @@
 *** Thanks again! Now go create something AMAZING! :D
 -->
 
-<!-- PROJECT VIDEO -->
+<!-- PROJECT DEMO -->
 <div align="center">
-  <video width="640" height="360" controls>
-    <source src="img/demo.mov" type="video/quicktime">
-  </video>
+  <img src="img/demo.gif" alt="Project Demo" width="640">
 </div>
 
 
