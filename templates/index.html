@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic RAG Query</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+        }
+        .response {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agentic RAG Query</h1>
+    <form method="POST">
+        <input type="text" name="user_query" placeholder="Enter your query" value="{{ user_query or '' }}">
+        <input type="submit" value="Submit">
+    </form>
+    {% if final_response %}
+    <div class="response">
+        <h2>Final Response:</h2>
+        <p>{{ final_response }}</p>
+    </div>
+    {% endif %}
+    {% if sub_questions and sub_answers %}
+    <div class="response">
+        <h2>Sub-questions and Answers:</h2>
+        {% for i in range(sub_questions|length) %}
+            <h3>Sub-Question: {{ sub_questions[i] }}</h3>
+            <p>Sub-Answer: {{ sub_answers[i] }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>

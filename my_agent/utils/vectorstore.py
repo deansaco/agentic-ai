@@ -7,8 +7,6 @@ from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 load_dotenv()
 from langchain_chroma import Chroma
-#from langchain.vectorstores import Chroma
-#from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import WebBaseLoader
 
@@ -52,9 +50,10 @@ else:
     vectorstore = Chroma.from_documents(
         documents=doc_splits,
         embedding=embeddings,
-        persist_directory=persist_directory
+        #persist_directory=persist_directory
     )
-    vectorstore.persist()
+    #vectorstore.persist()
     print(f"Created {index_name} in Chroma")
 
 retriever = vectorstore.as_retriever()
+

@@ -1,5 +1,5 @@
-from langchain_ibm import WatsonxLLM
-from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenTextParamsMetaNames
+#from langchain_ibm import WatsonxLLM
+#from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenTextParamsMetaNames
 import os
 from dotenv import load_dotenv
 load_dotenv()
