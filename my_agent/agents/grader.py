@@ -1,8 +1,8 @@
-from my_agent.utils.chains import retrieval_grader
+from my_agent.utils.chains import retrieval_grader_chain
 
 class Grader:
     def __init__(self):
-        self.retrieval_grader = retrieval_grader
+        self.retrieval_grader_chain = retrieval_grader_chain
 
     def grade_documents(self, state):
         """
@@ -27,7 +27,7 @@ class Grader:
         search = "No"
         
         for d in documents:
-            score = self.retrieval_grader.invoke(
+            score = self.retrieval_grader_chain.invoke(
                 {"question": question, "document": d.page_content}
             )
             grade = score["score"]

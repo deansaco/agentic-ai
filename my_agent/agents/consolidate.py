@@ -30,6 +30,7 @@ class Consolidate:
         for i in range(min(len(questions), len(answers))):
             qa_pairs.append({questions[i]: answers[i].strip()})
         print("multi hop context", qa_pairs)
+        # final_response = self.rag_chain.stream({"documents": qa_pairs, "question": user_query})
         final_response = self.rag_chain.invoke({"documents": qa_pairs, "question": user_query})
         print("Final Response to Original Query:", final_response)
         
