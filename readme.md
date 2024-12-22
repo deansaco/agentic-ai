@@ -33,7 +33,7 @@
     <img src="img/logo.drawio.png" alt="Logo" width="80" height="80">
   </a> -->
 
-  <h3 align="center">watsonx LangGraph Agent</h3>
+  <h3 align="center">LangGraph Information Retrieval Agent</h3>
 
   <p align="center">
     Handle Complex Multistep questions with compound AI
